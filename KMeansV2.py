@@ -100,7 +100,7 @@ class MyKMeans :
 		obj = 0.0
 		self.means = list()
 
-		for i in range(self.cluster_num+1):
+		for i in range(self.cluster_num):
 			dist_list = list()
 			idx_list = list()
 			acc_dist = 0.0
@@ -119,7 +119,7 @@ class MyKMeans :
 					dist_list.append((j, acc_dist))
 				# end for
 			else :
-				if i < self.cluster_num :
+				if i < self.cluster_num-1 :
 					for j in range(self.data_size) :
 						dist = self.calc_distance(self.means[i], self.data_set[j])
 						self.bound_matrix[j][0][i] = dist
@@ -130,6 +130,8 @@ class MyKMeans :
 					# end for
 				else :
 					for j in range(self.data_size) :
+						dist = self.calc_distance(self.means[i], self.data_set[j])
+						self.bound_matrix[j][0][i] = dist
 						self.bound_matrix[j][1] = min(self.bound_matrix[j][0])
 						self.bound_matrix[j][2] = self.bound_matrix[j][0].index(self.bound_matrix[j][1])
 						obj += self.bound_matrix[j][1]
@@ -151,6 +153,8 @@ class MyKMeans :
 		# end for
 
 		print("Calc Bound Matrix and Init Means 2: ",time.time()-start)
+
+
 		print("=== start iter ===")
 		start = time.time()
 		# iteration
